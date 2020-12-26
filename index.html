@@ -6,25 +6,39 @@
             body{
                 margin:0;
             }
-            #menu{
+            #topbar{
                 display: flex;
                 justify-content: space-around;
+            }
+            #menu{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
             textarea{
                 width: 100%;
                 height:100%;
                 overflow: hidden;
             }
+
+            #menu a{
+                padding: 1em 0;
+                font-size: 120%;
+            }
         </style>
     </head>
     <body>
         <div id="app">
-            <div id="menu">
-                <a href="#" onclick="showYesterday()">yesterday</a>
-                <a href="#" onclick="showToday()">today</a>
-                <a href="#" onclick="update()">save</a>
+            <div id="topbar" style="display:none">
+                <a href="#" onclick="back()">back</a>
+                <a href="#" onclick="save()">save</a>
             </div>
-            <textarea id="today">
+            <div id="menu">
+                <h1>Journal</h1>
+                <a href="#" onclick="showToday()">today</a>
+                <a href="#" onclick="showYesterday()">yesterday</a>
+            </div>
+            <textarea id="today"  style="display:none">
 
             </textarea>
             <textarea id="yesterday" style="display:none">
@@ -48,22 +62,37 @@
 
             init();
 
-            document.getElementById("today").addEventListener("keypress", update);
-            document.getElementById("yesterday").addEventListener("keypress", update);
-
             function update(){
                 updateEntry(today, document.getElementById("today").value);
                 updateEntry(yesterday, document.getElementById("yesterday").value);
             }
 
             function showYesterday(){
-                document.getElementById("today").style.display = 'none';
+                document.getElementById("menu").style.display = 'none';
                 document.getElementById("yesterday").style.display = 'block';
+                document.getElementById("topbar").style.display = 'flex';
             }
 
             function showToday(){
                 document.getElementById("today").style.display = 'block';
+                document.getElementById("menu").style.display = 'none';
+                document.getElementById("topbar").style.display = 'flex';
+            }
+
+            function back(){
+                document.getElementById("topbar").style.display = 'none';
+                document.getElementById("menu").style.display = 'flex';
+                document.getElementById("today").style.display = 'none';
                 document.getElementById("yesterday").style.display = 'none';
+                init();
+            }
+
+            function save(){
+                update();
+                document.getElementById("today").style.display = 'none';
+                document.getElementById("yesterday").style.display = 'none';
+                document.getElementById("menu").style.display = 'flex';
+                document.getElementById("topbar").style.display = 'none';
             }
 
             function updateEntry(date, text){
@@ -103,6 +132,7 @@
                     };
                 }
                 document.getElementById("today").value = todayEntry.text;
+
                 if(!yesterdayEntry){
                     yesterdayEntry = {
                         "date" : yesterday.toDateString(),
