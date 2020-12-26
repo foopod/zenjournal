@@ -20,9 +20,9 @@
     <body>
         <div id="app">
             <div id="menu">
-                <a href="#">yesterday</a>
-                <a href="#">today</a>
-                <a href="#">export</a>
+                <a href="#" onclick="showYesterday()">yesterday</a>
+                <a href="#" onclick="showToday()">today</a>
+                <a href="#" onclick="update()">save</a>
             </div>
             <textarea id="today">
 
@@ -54,6 +54,16 @@
             function update(){
                 updateEntry(today, document.getElementById("today").value);
                 updateEntry(yesterday, document.getElementById("yesterday").value);
+            }
+
+            function showYesterday(){
+                document.getElementById("today").style.display = 'none';
+                document.getElementById("yesterday").style.display = 'block';
+            }
+
+            function showToday(){
+                document.getElementById("today").style.display = 'block';
+                document.getElementById("yesterday").style.display = 'none';
             }
 
             function updateEntry(date, text){
