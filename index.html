@@ -62,23 +62,27 @@
 
             init();
 
+            //add current drafts to localstorage
             function update(){
                 updateEntry(today, document.getElementById("today").value);
                 updateEntry(yesterday, document.getElementById("yesterday").value);
             }
 
+            // ui - show yesterday entry
             function showYesterday(){
                 document.getElementById("menu").style.display = 'none';
                 document.getElementById("yesterday").style.display = 'block';
                 document.getElementById("topbar").style.display = 'flex';
             }
 
+            // ui - show today entry
             function showToday(){
                 document.getElementById("today").style.display = 'block';
                 document.getElementById("menu").style.display = 'none';
                 document.getElementById("topbar").style.display = 'flex';
             }
 
+            // ui - ignore changes and go to menu
             function back(){
                 document.getElementById("topbar").style.display = 'none';
                 document.getElementById("menu").style.display = 'flex';
@@ -87,6 +91,7 @@
                 init();
             }
 
+            // ui - save changes and go to menu
             function save(){
                 update();
                 document.getElementById("today").style.display = 'none';
@@ -103,6 +108,7 @@
                 addToStorage(entry);
             }
 
+            // add single entry to storage
             function addToStorage(entry){
                 if(journal.filter(function(e) { return e.date === entry.date; }).length < 1){
                     journal.push(entry);
@@ -112,6 +118,7 @@
                 localStorage.setItem("journal",JSON.stringify(journal));
             }
 
+            // load from localstorage or initialize if doesn't exist
             function init(){
                 if(localStorage.getItem("journal")){
                     journal = JSON.parse(localStorage.getItem("journal"));
