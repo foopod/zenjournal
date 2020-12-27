@@ -56,10 +56,13 @@
                 text-align: center;
                 text-decoration: none;
             }
-            #date{
+            #date, #older span{
                 font-weight: bold;
                 font-size: smaller;
                 text-align: left;
+            }
+            #older{
+                padding-top : 1em;
             }
         </style>
     </head>
@@ -72,9 +75,10 @@
             </div>
             <div id="menu">
                 <h1>My Journal</h1>
-                <a href="#journal-today" onclick="showToday()">today</a>
-                <a href="#journal-yesterday" onclick="showYesterday()">yesterday</a>
-                <a href="#settings" onclick="showSettings()">settings</a>
+                <a href="#journal-today">today</a>
+                <a href="#journal-yesterday">yesterday</a>
+                <a id ="older-button" href="#older" style="display:none">older</a>
+                <a href="#settings">settings</a>
             </div>
             <textarea id="today"  style="display:none">
 
@@ -82,6 +86,9 @@
             <textarea id="yesterday" style="display:none">
 
             </textarea>
+            <div id="older" style="display:none">
+
+            </div>
             <div id="settings" style="display:none">
                 <div id="settingsBar">
                     <span id=""></span>
@@ -91,7 +98,6 @@
                 <a href="#export" onclick="saveJSON()">json</a>
                 <p><b>Template</b></p>
                 <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
-                
             </div>
         </div>
         <script>
@@ -149,6 +155,16 @@
                 document.getElementById("date").innerText = today.toDateString();
             }
 
+            // ui - show older entries (uneditable)
+            function showOlder(){
+                journal.forEach(entry => {
+                    if(entry.date != today.toDateString() && entry.date != yesterday.toDateString()){
+                        document.getElementById("older").innerHTML = "";
+                        document.getElementById("older").innerHTML+="<span>" + entry.date+"</span><p>"+entry.text+"</p>";
+                    }
+                });
+            }
+
             window.addEventListener("hashchange", function(){
                 loadScreen(window.location.hash);
             });
@@ -172,6 +188,7 @@
                     document.getElementById("yesterday").style.display = 'none';
                     document.getElementById("settings").style.display = 'none';
                     document.getElementById("topbar").style.display = 'none';
+                    document.getElementById("older").style.display = 'none';
                 } else if(hash == "#settings"){
                     showSettings();
                     document.getElementById("menu").style.display = 'none';
@@ -179,6 +196,7 @@
                     document.getElementById("yesterday").style.display = 'none';
                     document.getElementById("settings").style.display = 'block';
                     document.getElementById("topbar").style.display = 'none';
+                    document.getElementById("older").style.display = 'none';
                 } else if(hash == "#journal-today"){
                     showToday();
                     document.getElementById("menu").style.display = 'none';
@@ -186,6 +204,7 @@
                     document.getElementById("yesterday").style.display = 'none';
                     document.getElementById("settings").style.display = 'none';
                     document.getElementById("topbar").style.display = 'flex';
+                    document.getElementById("older").style.display = 'none';
                 } else if(hash == "#journal-yesterday"){
                     showYesterday();
                     document.getElementById("menu").style.display = 'none';
@@ -193,6 +212,15 @@
                     document.getElementById("yesterday").style.display = 'block';
                     document.getElementById("settings").style.display = 'none';
                     document.getElementById("topbar").style.display = 'flex';
+                    document.getElementById("older").style.display = 'none';
+                } else if(hash == "#older"){
+                    showOlder();
+                    document.getElementById("menu").style.display = 'none';
+                    document.getElementById("today").style.display = 'none';
+                    document.getElementById("yesterday").style.display = 'none';
+                    document.getElementById("settings").style.display = 'none';
+                    document.getElementById("topbar").style.display = 'none';
+                    document.getElementById("older").style.display = 'block';
                 }
             }
 
@@ -236,6 +264,7 @@
 
             // load from localstorage or initialize if doesn't exist
             function init(){
+                // load journal and set today and yesterday if they exist
                 if(localStorage.getItem("journal")){
                     journal = JSON.parse(localStorage.getItem("journal"));
                     journal.forEach(entry => {
@@ -248,11 +277,17 @@
                         }
                     });
                 }
+                // load template
                 if(localStorage.getItem("template")){
                     currentTemplate = localStorage.getItem("template");
                 } else {
                     currentTemplate = defaultTemplate;
                 }
+
+                if(journal.length > 2){
+                    document.getElementById("older-button").style.display = "block";
+                }
+
                 loadScreen(window.location.hash);
             }
             
