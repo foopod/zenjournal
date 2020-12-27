@@ -11,8 +11,9 @@
             }
             #topbar, #settingsBar{
                 display: flex;
-                justify-content: space-around;
+                justify-content: space-between;
                 font-size: 120%;
+                align-items: baseline;
                 
             }
             #topbar a, #settingsBar a{
@@ -35,6 +36,9 @@
                 overflow: scroll;
                 font-size: 120%;
                 border: none;
+                padding:0.2em;
+                padding-bottom: 2em;
+                
             }
 
             textarea.mini {
@@ -52,12 +56,18 @@
                 text-align: center;
                 text-decoration: none;
             }
+            #date{
+                font-weight: bold;
+                font-size: smaller;
+                text-align: left;
+            }
         </style>
     </head>
     <body>
         <div id="app">
             <div id="topbar" style="display:none">
                 <!-- <a href="#menu" onclick="back()">back</a> -->
+                <span id="date"></span>
                 <a href="#menu" onclick="save()">save</a>
             </div>
             <div id="menu">
@@ -74,6 +84,7 @@
             </textarea>
             <div id="settings" style="display:none">
                 <div id="settingsBar">
+                    <span id=""></span>
                     <a href="#menu" onclick="saveSettings()">save</a>
                 </div>
                 <p><b>Template</b></p>
@@ -117,6 +128,7 @@
                     yesterdayEntry.text = currentTemplate;
                 }
                 document.getElementById("yesterday").value = yesterdayEntry.text;
+                document.getElementById("date").innerText = yesterday.toDateString();
             }
 
             // ui - show today entry
@@ -131,6 +143,7 @@
                     todayEntry.text = currentTemplate;
                 }
                 document.getElementById("today").value = todayEntry.text;
+                document.getElementById("date").innerText = today.toDateString();
             }
 
             window.addEventListener("hashchange", function(){
