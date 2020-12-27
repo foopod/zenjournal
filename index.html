@@ -5,7 +5,9 @@
         <style>
             body{
                 margin:0;
+                height: 100%;
                 padding:0 1em;
+                font-family: mono;
             }
             #topbar, #settingsBar{
                 display: flex;
@@ -19,7 +21,8 @@
                 padding:0.2em;
                 width: 30%;
                 text-align: center;
-                margin:0.5em
+                margin:0.5em;
+                text-decoration: none;
             }
             #menu{
                 display: flex;
@@ -40,13 +43,14 @@
             }
 
             #menu a{
-                padding: 20px 10px;
-                margin: 1em;
+                padding: 10px 5px;
+                margin: 0.5em;
                 width: 60%;
-                font-size: 200%;
+                font-size: 150%;
                 background-color: black;
                 color: white;
                 text-align: center;
+                text-decoration: none;
             }
         </style>
     </head>
@@ -70,7 +74,7 @@
             </textarea>
             <div id="settings" style="display:none">
                 <div id="settingsBar">
-                    <a href="#" onclick="saveSettings()">save</a>
+                    <a href="#menu" onclick="saveSettings()">save</a>
                 </div>
                 <p><b>Template</b></p>
                 <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
@@ -94,17 +98,16 @@
 
             //add current drafts to localstorage
             function update(){
-                if(!todayEntry){
+                if(isTodaySelected){
                     updateEntry(today, document.getElementById("today").value);
-                }
-                if(!yesterdayEntry){
+                }else {
                     updateEntry(yesterday, document.getElementById("yesterday").value);
-                }
-                
+                }   
             }
 
             // ui - show yesterday entry
             function showYesterday(){
+                isTodaySelected = false;
                 if(!yesterdayEntry){
                     yesterdayEntry = {
                         "date" : yesterday.toDateString(),
@@ -114,13 +117,11 @@
                     yesterdayEntry.text = currentTemplate;
                 }
                 document.getElementById("yesterday").value = yesterdayEntry.text;
-                document.getElementById("menu").style.display = 'none';
-                document.getElementById("yesterday").style.display = 'block';
-                document.getElementById("topbar").style.display = 'flex';
             }
 
             // ui - show today entry
             function showToday(){
+                isTodaySelected = true;
                 if(!todayEntry){
                     todayEntry = {
                         "date" : today.toDateString(),
@@ -130,41 +131,61 @@
                     todayEntry.text = currentTemplate;
                 }
                 document.getElementById("today").value = todayEntry.text;
-                document.getElementById("today").style.display = 'block';
-                document.getElementById("menu").style.display = 'none';
-                document.getElementById("topbar").style.display = 'flex';
+            }
+
+            window.addEventListener("hashchange", function(){
+                loadScreen(window.location.hash);
+            });
+
+            function loadScreen (hash){
+                if(hash == "#menu"){
+                    document.getElementById("menu").style.display = 'flex';
+                    document.getElementById("today").style.display = 'none';
+                    document.getElementById("yesterday").style.display = 'none';
+                    document.getElementById("settings").style.display = 'none';
+                    document.getElementById("topbar").style.display = 'none';
+                } else if(hash == "#settings"){
+                    showSettings();
+                    document.getElementById("menu").style.display = 'none';
+                    document.getElementById("today").style.display = 'none';
+                    document.getElementById("yesterday").style.display = 'none';
+                    document.getElementById("settings").style.display = 'block';
+                    document.getElementById("topbar").style.display = 'none';
+                } else if(hash == "#journal-today"){
+                    showToday();
+                    document.getElementById("menu").style.display = 'none';
+                    document.getElementById("today").style.display = 'block';
+                    document.getElementById("yesterday").style.display = 'none';
+                    document.getElementById("settings").style.display = 'none';
+                    document.getElementById("topbar").style.display = 'flex';
+                } else if(hash == "#journal-yesterday"){
+                    showYesterday();
+                    document.getElementById("menu").style.display = 'none';
+                    document.getElementById("today").style.display = 'none';
+                    document.getElementById("yesterday").style.display = 'block';
+                    document.getElementById("settings").style.display = 'none';
+                    document.getElementById("topbar").style.display = 'flex';
+                }
             }
 
             function showSettings(){
                 document.getElementById("templateField").value = currentTemplate;
-                document.getElementById("menu").style.display = 'none';
-                document.getElementById("settings").style.display = 'block';
             }
 
             function saveSettings(){
                 oldTemplate = currentTemplate;
                 currentTemplate = document.getElementById("templateField").value;
                 localStorage.setItem("template", currentTemplate);
-                document.getElementById("menu").style.display = 'flex';
-                document.getElementById("settings").style.display = 'none';
             }
 
             // ui - ignore changes and go to menu
             function back(){
-                document.getElementById("topbar").style.display = 'none';
-                document.getElementById("menu").style.display = 'flex';
-                document.getElementById("today").style.display = 'none';
-                document.getElementById("yesterday").style.display = 'none';
                 init();
             }
 
             // ui - save changes and go to menu
             function save(){
                 update();
-                document.getElementById("today").style.display = 'none';
-                document.getElementById("yesterday").style.display = 'none';
-                document.getElementById("menu").style.display = 'flex';
-                document.getElementById("topbar").style.display = 'none';
             }
 
             function updateEntry(date, text){
@@ -204,6 +225,7 @@
                 } else {
                     currentTemplate = defaultTemplate;
                 }
+                loadScreen(window.location.hash);
             }
             
         </script>
