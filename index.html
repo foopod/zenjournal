@@ -157,9 +157,9 @@
 
             // ui - show older entries (uneditable)
             function showOlder(){
+                document.getElementById("older").innerHTML = "";
                 journal.forEach(entry => {
                     if(true || entry.date != today.toDateString() && entry.date != yesterday.toDateString()){
-                        document.getElementById("older").innerHTML = "";
                         document.getElementById("older").innerHTML+="<span>" + entry.date+"</span><p>"+entry.text+"</p>";
                     }
                 });
@@ -175,7 +175,7 @@
                     template : localStorage.getItem("template")
                 };
                 var a = document.createElement("a");
-                var file = new Blob([JSON.stringify(content)], {type: 'text/plain'});
+                var file = new Blob([JSON.stringify(content)], {type: 'application/json'});
                 a.href = URL.createObjectURL(file);
                 a.download = "journal.json";
                 a.click();
