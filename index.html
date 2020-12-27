@@ -158,6 +158,9 @@
             // ui - show older entries (uneditable)
             function showOlder(){
                 document.getElementById("older").innerHTML = "";
+                journal.sort((a, b) => {
+                    return new Date(a.date) - new Date(b.date);
+                });
                 journal.forEach(entry => {
                     if(true || entry.date != today.toDateString() && entry.date != yesterday.toDateString()){
                         document.getElementById("older").innerHTML+="<span>" + entry.date+"</span><p>"+entry.text+"</p>";
