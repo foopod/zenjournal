@@ -5,6 +5,7 @@
         <style>
             body{
                 margin:0;
+                padding:1em;
             }
             #topbar, #settingsBar{
                 display: flex;
@@ -30,6 +31,7 @@
                 height:100%;
                 overflow: hidden;
                 font-size: 120%;
+                border: none;
             }
 
             textarea.mini {
@@ -50,14 +52,14 @@
     <body>
         <div id="app">
             <div id="topbar" style="display:none">
-                <a href="#" onclick="back()">back</a>
-                <a href="#" onclick="save()">save</a>
+                <a href="#menu" onclick="back()">back</a>
+                <a href="#menu" onclick="save()">save</a>
             </div>
             <div id="menu">
                 <h1>My Journal</h1>
-                <a href="#" onclick="showToday()">today</a>
-                <a href="#" onclick="showYesterday()">yesterday</a>
-                <a href="#" onclick="showSettings()">settings</a>
+                <a href="#journal-today" onclick="showToday()">today</a>
+                <a href="#journal-yesterday" onclick="showYesterday()">yesterday</a>
+                <a href="#settings" onclick="showSettings()">settings</a>
             </div>
             <textarea id="today"  style="display:none">
 
@@ -69,7 +71,7 @@
                 <div id="settingsBar">
                     <a href="#" onclick="saveSettings()">save</a>
                 </div>
-                <p>Template</p>
+                <p><b>Template</b></p>
                 <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
             </div>
         </div>
