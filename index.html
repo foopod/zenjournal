@@ -9,6 +9,16 @@
             #topbar, #settingsBar{
                 display: flex;
                 justify-content: space-around;
+                font-size: 120%;
+                
+            }
+            #topbar a, #settingsBar a{
+                background-color: black;
+                color: white;
+                padding:0.2em;
+                width: 30%;
+                text-align: center;
+                margin:0.3em
             }
             #menu{
                 display: flex;
@@ -44,7 +54,7 @@
                 <a href="#" onclick="save()">save</a>
             </div>
             <div id="menu">
-                <h1>Journal</h1>
+                <h1>My Journal</h1>
                 <a href="#" onclick="showToday()">today</a>
                 <a href="#" onclick="showYesterday()">yesterday</a>
                 <a href="#" onclick="showSettings()">settings</a>
