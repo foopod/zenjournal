@@ -1,7 +1,7 @@
 self.addEventListener('install', function(event) {
     event.waitUntil(
       caches.open('sw-cache').then(function(cache) {
-        return cache.addAll(['index.html', 'script/app.js', 'style/style.css', 'icon.png']);
+        return cache.addAll(['index.html', 'app.js', 'style.css', 'icon.png']);
       })
     );
   });
