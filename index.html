@@ -100,19 +100,18 @@
                     <a href="#menu" onclick="saveSettings()">save</a>
                 </div>
                 <p><b>Export</b></p>
-                <a href="#export" onclick="saveJSON()">json</a>
-                <p><b>importFromJSON</b></p>
+                <button class="button" onclick="saveJSON()">save file</button>
+                <p><b>Import</b></p>
                 <input type="file" id="default-file" hidden="hidden"/>
                 <button id="uploadButton" type="button" class="button">
                     choose file
                 </button>
-                <p><b>Template</b></p>
+                <p><b>Daily Template</b></p>
                 <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
             </div>
         </div>
         <script>
             var journal = [];
-            
             var defaultTemplate = "What happened yesterday?\n- \n\nToday I want to \n\nI am grateful for ";
             var currentTemplate;
             var oldTemplate;
@@ -213,8 +212,10 @@
             });
 
             function importFromJSON(jsonImport){
-                localStorage.setItem("journal", jsonImport.journal);
+                console.log(jsonImport);
+                localStorage.setItem("journal", JSON.stringify(jsonImport.journal));
                 localStorage.setItem("template", jsonImport.template);
+                console.log(localStorage);
                 init();
                 loadScreen("#menu");
             }
@@ -320,6 +321,7 @@
                     currentTemplate = localStorage.getItem("template");
                 } else {
                     currentTemplate = defaultTemplate;
+                    localStorage.setItem("template", defaultTemplate);
                 }
 
                 if(journal.length > 2){
