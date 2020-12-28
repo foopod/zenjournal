@@ -17,7 +17,7 @@
                 align-items: baseline;
                 
             }
-            #topbar a, #settingsBar a{
+            #topbar a, #settingsBar a, .button{
                 background-color: black;
                 color: white;
                 padding:0.2em;
@@ -26,6 +26,9 @@
                 margin:0.5em;
                 text-decoration: none;
             }
+            .button{
+                border:none;
+            }
             #menu{
                 display: flex;
                 flex-direction: column;
@@ -33,7 +36,7 @@
             }
             textarea{
                 width: 100%;
-                height:90%;
+                height:70%;
                 overflow: scroll;
                 font-size: 120%;
                 border: none;
@@ -43,7 +46,7 @@
             }
 
             textarea.mini {
-                height:80%;
+                height:70%;
                 overflow: scroll;
             }
 
@@ -98,6 +101,11 @@
                 </div>
                 <p><b>Export</b></p>
                 <a href="#export" onclick="saveJSON()">json</a>
+                <p><b>importFromJSON</b></p>
+                <input type="file" id="default-file" hidden="hidden"/>
+                <button id="uploadButton" type="button" class="button">
+                    choose file
+                </button>
                 <p><b>Template</b></p>
                 <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
             </div>
@@ -184,6 +192,31 @@
                 a.href = URL.createObjectURL(file);
                 a.download = "journal.json";
                 a.click();
+            }
+
+            //click actual upload input
+            document.getElementById("uploadButton").addEventListener("click", function () {
+                document.getElementById("default-file").click();
+            });
+
+            //when file input changes
+            document.getElementById("default-file").addEventListener("change", function () {
+                if (document.getElementById("default-file").value) {
+                    const fileReader = new FileReader();
+                    fileReader.addEventListener("load", function () {
+                        // convert image to base64 encoded string
+                        importFromJSON(JSON.parse(this.result));
+                        
+                    });
+                    fileReader.readAsText(document.getElementById("default-file").files[0]);
+                }
+            });
+
+            function importFromJSON(jsonImport){
+                localStorage.setItem("journal", jsonImport.journal);
+                localStorage.setItem("template", jsonImport.template);
+                init();
+                loadScreen("#menu");
             }
 
             function loadScreen (hash){
