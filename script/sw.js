@@ -2,7 +2,13 @@ self.addEventListener('install', function(event) {
     console.log("cache make");
     event.waitUntil(
       caches.open('sw-cache').then(function(cache) {
-        return cache.add('/');
+        return cache.addAll([
+            '/',
+            '/index.html',
+            '/script/app.js',
+            '/style/style.css',
+            '/icon.png'
+        ]);
       })
     );
   });
