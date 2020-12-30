@@ -2,6 +2,7 @@ self.addEventListener('install', function(event) {
     console.log("cache make");
     event.waitUntil(
       caches.open('sw-cache').then(function(cache) {
+          console.log("made");
         return cache.addAll([
             '/',
             '/index.html',
