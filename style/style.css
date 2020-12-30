@@ -1,11 +1,13 @@
-body{
-    margin:0;
+html, body, #app{
     height: 100%;
+}
+body{
     padding:0 1em;
     font-family: mono;
     max-width: 26em;
     margin: auto;
 }
+
 #topbar, #settingsBar{
     display: flex;
     justify-content: space-between;
