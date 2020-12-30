@@ -22,6 +22,10 @@ body{
     margin:0.5em;
     text-decoration: none;
 }
+
+#topbar{
+    position: sticky;
+}
 .button{
     border:none;
     padding:0.5em;
@@ -35,7 +39,7 @@ body{
 }
 textarea{
     width: 100%;
-    height:80%;
+    height:90%;
     overflow: scroll;
     font-size: 120%;
     border: none;
@@ -45,7 +49,7 @@ textarea{
 }
 
 textarea.mini {
-    height:80%;
+    height:20em;
     overflow: scroll;
 }
 
