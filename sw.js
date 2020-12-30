@@ -5,6 +5,7 @@ self.addEventListener('install', function(event) {
           console.log("made");
         return cache.addAll([
             '/',
+            '/#menu',
             '/index.html',
             '/script/app.js',
             '/style/style.css',
