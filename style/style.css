@@ -68,3 +68,13 @@ textarea.mini {
     padding-top : 1em;
     white-space: pre-line;
 }
+
+.dark, .dark textarea{
+    background-color: black;
+    color: white;
+}
+
+.dark #menu a, .dark #settingsBar a, .dark #topbar a, .dark .button{
+    background-color: white;
+    color: black;
+}

@@ -108,7 +108,7 @@ function importFromJSON(jsonImport){
 }
 
 function loadScreen (hash){
-    if(hash == "#menu"){
+    if(hash == "#menu" || hash == "#" || hash == ""){
         document.getElementById("menu").style.display = 'flex';
         document.getElementById("today").style.display = 'none';
         document.getElementById("yesterday").style.display = 'none';

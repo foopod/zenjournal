@@ -1,14 +1,16 @@
 <html>
     <head>
-        <title>Journal</title>
+        <title>My Journal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
         <link rel="manifest" href="/manifest.webmanifest">
         <link rel="stylesheet" href="style/style.css">
         <script>
-            if('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('script/sw.js');
-            };
+            window.addEventListener("load", () => {
+                if('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('script/sw.js');
+                };
+            });
         </script>
     </head>
     <body>
@@ -23,7 +25,7 @@
                 <a href="#journal-yesterday">yesterday</a>
                 <a id ="older-button" href="#older" style="display:none">older</a>
                 <a href="#settings">settings</a>
-                <img src="icon.png" style="width: 200px;position: absolute;bottom:0;">
+                <img src="icon.png" style="width: 200px;position: absolute;bottom:0; border-radius: 30%;">
             </div>
             <textarea id="today"  style="display:none">
 
