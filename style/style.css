@@ -11,14 +11,14 @@ body{
 #topbar, #settingsBar{
     display: flex;
     justify-content: space-between;
-    font-size: 120%;
+    font-size: 150%;
     align-items: baseline;
     
 }
 #topbar a, #settingsBar a, .button{
     background-color: black;
     color: white;
-    padding:0.2em;
+    padding:0.3em;
     width: 30%;
     text-align: center;
     margin:0.5em;
