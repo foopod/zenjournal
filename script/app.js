@@ -217,3 +217,12 @@ function init(){
 
     loadScreen(window.location.hash);
 }
+
+function setTheme(style){
+    localStorage.setItem("theme", style);
+    if(localStorage.getItem("theme") == 'dark'){
+        document.querySelector("html").className = "dark";
+    } else {
+        document.querySelector("html").className = "light";
+    }
+}

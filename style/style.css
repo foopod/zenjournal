@@ -74,6 +74,7 @@ textarea.mini {
     white-space: pre-line;
 }
 
+/* Dark Mode */
 .dark, .dark textarea{
     background-color: black;
     color: white;

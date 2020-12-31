@@ -13,6 +13,9 @@
                 if('serviceWorker' in navigator) {
                     navigator.serviceWorker.register('sw.js');
                 };
+                if(localStorage.getItem("theme") == 'dark'){
+                    document.querySelector("html").className = "dark";
+                }
             });
         </script>
     </head>
@@ -50,6 +53,9 @@
                 <button id="uploadButton" type="button" class="button">
                     choose file
                 </button>
+                <p><b>Theme</b></p>
+                <button class="button" onclick="setTheme('light')">light</button>
+                <button class="button" onclick="setTheme('dark')">dark</button>
                 <p><b>Daily Template</b></p>
                 <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
             </div>
