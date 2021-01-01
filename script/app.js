@@ -8,7 +8,7 @@ var yesterday = new Date(new Date().setDate(today.getDate()-1));
 var todayEntry;
 var yesterdayEntry;
 
-var isTodaySelected = true;
+var isTodaySelected = false;
 
 init();
 
@@ -158,11 +158,6 @@ function saveSettings(){
     oldTemplate = currentTemplate;
     currentTemplate = document.getElementById("templateField").value;
     localStorage.setItem("template", currentTemplate);
-}
-
-// ui - ignore changes and go to menu
-function back(){
-    init();
 }
 
 // ui - save changes and go to menu
