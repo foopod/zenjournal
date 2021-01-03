@@ -1,59 +1,77 @@
-var journal = [];
-var defaultTemplate = "What happened yesterday?\n- \n\nToday I want to \n\nI am grateful for ";
-var currentTemplate;
-var oldTemplate;
-var today = new Date();
-var yesterday = new Date(new Date().setDate(today.getDate()-1));
+var currentEntryDate;
 
-var todayEntry;
-var yesterdayEntry;
+// load from localstorage or initialize if doesn't exist
+function init(){
 
-var isTodaySelected = false;
+    // set up localstorage
+    if(!localStorage.getItem("journal"))
+        localStorage.setItem("journal", JSON.stringify([]));
 
-init();
-
-//add current drafts to localstorage
-function update(){
-    if(isTodaySelected){
-        updateEntry(today, document.getElementById("today").value);
-    }else {
-        updateEntry(yesterday, document.getElementById("yesterday").value);
-    }   
-}
-
-// ui - show yesterday entry
-function showYesterday(){
-    isTodaySelected = false;
-    if(!yesterdayEntry){
-        yesterdayEntry = {
-            "date" : yesterday.toDateString(),
-            "text" : currentTemplate
-        };
-    } else if(yesterdayEntry.text == oldTemplate){
-        yesterdayEntry.text = currentTemplate;
+    // set up template if doesn't exist
+    if(!localStorage.getItem("template"))
+        localStorage.setItem("template", "What happened yesterday?\n- \n\nToday I want to \n\nI am grateful for ");
+    
+    // enable older if more than 2 entries
+    if(JSON.parse(localStorage.getItem("journal")).length > 2){
+        document.getElementById("older-button").style.display = "block";
     }
-    document.getElementById("yesterday").value = yesterdayEntry.text;
-    document.getElementById("date").innerText = yesterday.toDateString();
+
+    // hopefully not a direct link to anything other than the menu, but load the page they ask for anyway
+    loadScreen(window.location.hash);
 }
 
-// ui - show today entry
-function showToday(){
-    isTodaySelected = true;
-    if(!todayEntry){
-        todayEntry = {
-            "date" : today.toDateString(),
-            "text" : currentTemplate
-        };
-    } else if(todayEntry.text == oldTemplate){
-        todayEntry.text = currentTemplate;
+// show ui to add/edit an entry
+function showEntry(day){
+    var today = new Date();
+    if(day == "tomorrow"){
+        currentEntryDate = new Date(new Date().setDate(today.getDate()+1));
+    } else if(day == "today"){
+        currentEntryDate = new Date();
+    } else if(day == "yesterday"){
+        currentEntryDate = new Date(new Date().setDate(today.getDate()-1));
     }
-    document.getElementById("today").value = todayEntry.text;
-    document.getElementById("date").innerText = today.toDateString();
+
+    //set date
+    document.getElementById("date").innerText = currentEntryDate.toDateString();
+
+    // check if entry exists
+    var match = JSON.parse(localStorage.getItem("journal")).filter(function(e) { return e.date === currentEntryDate.toDateString(); })
+    if(match.length > 0){
+
+        // use previously save version
+        document.getElementById("entry").value = match[0].text;
+    } else{
+
+        // use template
+        document.getElementById("entry").value = localStorage.getItem("template");
+    }
 }
 
-// ui - show older entries (uneditable)
+// save changes and go to menu
+function saveEntry(){
+    var entry = {
+        "date" : currentEntryDate.toDateString(),
+        "text" : document.getElementById("entry").value
+    };
+
+    var journal = JSON.parse(localStorage.getItem("journal"));
+    
+    if(entry.text == localStorage.getItem("template") || entry.text == ""){
+        // don't save and actually delete stored entry if it exists
+        journal = journal.filter(function(e) { return e.date != entry.date; })
+    } else if (journal.filter(function(e) { return e.date === entry.date; }).length < 1){
+        journal.push(entry);
+    } else {
+        journal.filter(function(e) { return e.date === entry.date; })[0].text = entry.text;
+    }
+    localStorage.setItem("journal", JSON.stringify(journal));
+}
+
+// show older entries (uneditable)
 function showOlder(){
     document.getElementById("older").innerHTML = "";
+
+    var journal = JSON.parse(localStorage.getItem("journal"));
     journal.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     });
@@ -64,10 +82,16 @@ function showOlder(){
     });
 }
 
-window.addEventListener("hashchange", function(){
-    loadScreen(window.location.hash);
-});
+// populate settings page
+function showSettings(){
+    document.getElementById("templateField").value = localStorage.getItem("template");
+}
 
+function saveSettings(){
+    localStorage.setItem("template", document.getElementById("templateField").value);
+}
+
+// export json backup
 function saveJSON() {
     var content = {
         journal : JSON.parse(localStorage.getItem("journal")),
@@ -80,12 +104,67 @@ function saveJSON() {
     a.click();
 }
 
-//click actual upload input
+// import from json backup
+function importFromJSON(jsonImport){
+    localStorage.setItem("journal", JSON.stringify(jsonImport.journal));
+    localStorage.setItem("template", jsonImport.template);
+    init();
+}
+
+// store theme preference
+function setTheme(style){
+    localStorage.setItem("theme", style);
+    if(localStorage.getItem("theme") == 'dark'){
+        document.querySelector("html").className = "dark";
+    } else {
+        document.querySelector("html").className = "light";
+    }
+}
+
+// lol my shitty page router
+function loadScreen(hash){
+    if(hash == "#menu" || hash == "#" || hash == ""){
+        document.getElementById("menu").style.display = 'flex';
+        document.getElementById("entryPage").style.display = 'none';
+        document.getElementById("settings").style.display = 'none';
+        document.getElementById("older").style.display = 'none';
+    } else if(hash == "#settings"){
+        showSettings();
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("entryPage").style.display = 'none';
+        document.getElementById("settings").style.display = 'block';
+        document.getElementById("older").style.display = 'none';
+    } else if(hash == "#journal-today"){
+        showEntry("today");
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("entryPage").style.display = 'block';
+        document.getElementById("settings").style.display = 'none';
+        document.getElementById("older").style.display = 'none';
+    } else if(hash == "#journal-yesterday"){
+        showEntry("yesterday");
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("entryPage").style.display = 'block';
+        document.getElementById("settings").style.display = 'none';
+        document.getElementById("older").style.display = 'none';
+    } else if(hash == "#older"){
+        showOlder();
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("entryPage").style.display = 'none';
+        document.getElementById("settings").style.display = 'none';
+        document.getElementById("older").style.display = 'block';
+    }
+}
+
+window.addEventListener("hashchange", function(){
+    loadScreen(window.location.hash);
+});
+
+// click to trigger upload
 document.getElementById("uploadButton").addEventListener("click", function () {
     document.getElementById("default-file").click();
 });
 
-//when file input changes
+// upload json file
 document.getElementById("default-file").addEventListener("change", function () {
     if (document.getElementById("default-file").value) {
         const fileReader = new FileReader();
@@ -98,126 +177,4 @@ document.getElementById("default-file").addEventListener("change", function () {
     }
 });
 
-function importFromJSON(jsonImport){
-    console.log(jsonImport);
-    localStorage.setItem("journal", JSON.stringify(jsonImport.journal));
-    localStorage.setItem("template", jsonImport.template);
-    console.log(localStorage);
-    init();
-    loadScreen("#menu");
-}
-
-function loadScreen (hash){
-    if(hash == "#menu" || hash == "#" || hash == ""){
-        document.getElementById("menu").style.display = 'flex';
-        document.getElementById("today").style.display = 'none';
-        document.getElementById("yesterday").style.display = 'none';
-        document.getElementById("settings").style.display = 'none';
-        document.getElementById("topbar").style.display = 'none';
-        document.getElementById("older").style.display = 'none';
-    } else if(hash == "#settings"){
-        showSettings();
-        document.getElementById("menu").style.display = 'none';
-        document.getElementById("today").style.display = 'none';
-        document.getElementById("yesterday").style.display = 'none';
-        document.getElementById("settings").style.display = 'block';
-        document.getElementById("topbar").style.display = 'none';
-        document.getElementById("older").style.display = 'none';
-    } else if(hash == "#journal-today"){
-        showToday();
-        document.getElementById("menu").style.display = 'none';
-        document.getElementById("today").style.display = 'block';
-        document.getElementById("yesterday").style.display = 'none';
-        document.getElementById("settings").style.display = 'none';
-        document.getElementById("topbar").style.display = 'flex';
-        document.getElementById("older").style.display = 'none';
-    } else if(hash == "#journal-yesterday"){
-        showYesterday();
-        document.getElementById("menu").style.display = 'none';
-        document.getElementById("today").style.display = 'none';
-        document.getElementById("yesterday").style.display = 'block';
-        document.getElementById("settings").style.display = 'none';
-        document.getElementById("topbar").style.display = 'flex';
-        document.getElementById("older").style.display = 'none';
-    } else if(hash == "#older"){
-        showOlder();
-        document.getElementById("menu").style.display = 'none';
-        document.getElementById("today").style.display = 'none';
-        document.getElementById("yesterday").style.display = 'none';
-        document.getElementById("settings").style.display = 'none';
-        document.getElementById("topbar").style.display = 'none';
-        document.getElementById("older").style.display = 'block';
-    }
-}
-
-function showSettings(){
-    document.getElementById("templateField").value = currentTemplate;
-}
-
-function saveSettings(){
-    oldTemplate = currentTemplate;
-    currentTemplate = document.getElementById("templateField").value;
-    localStorage.setItem("template", currentTemplate);
-}
-
-// ui - save changes and go to menu
-function save(){
-    update();
-}
-
-function updateEntry(date, text){
-    var entry = {
-        "date" : date.toDateString(),
-        "text" : text
-    }
-    addToStorage(entry);
-}
-
-// add single entry to storage
-function addToStorage(entry){
-    if(journal.filter(function(e) { return e.date === entry.date; }).length < 1){
-        journal.push(entry);
-    }else{
-        journal.filter(function(e) { return e.date === entry.date; })[0].text = entry.text;
-    }
-    localStorage.setItem("journal",JSON.stringify(journal));
-}
-
-// load from localstorage or initialize if doesn't exist
-function init(){
-    // load journal and set today and yesterday if they exist
-    if(localStorage.getItem("journal")){
-        journal = JSON.parse(localStorage.getItem("journal"));
-        journal.forEach(entry => {
-            if(entry.date == today.toDateString()){
-                todayEntry = entry;
-                
-            } else if(entry.date == yesterday.toDateString()){
-                yesterdayEntry = entry;
-                
-            }
-        });
-    }
-    // load template
-    if(localStorage.getItem("template")){
-        currentTemplate = localStorage.getItem("template");
-    } else {
-        currentTemplate = defaultTemplate;
-        localStorage.setItem("template", defaultTemplate);
-    }
-
-    if(journal.length > 2){
-        document.getElementById("older-button").style.display = "block";
-    }
-
-    loadScreen(window.location.hash);
-}
-
-function setTheme(style){
-    localStorage.setItem("theme", style);
-    if(localStorage.getItem("theme") == 'dark'){
-        document.querySelector("html").className = "dark";
-    } else {
-        document.querySelector("html").className = "light";
-    }
-}
+init();

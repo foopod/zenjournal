@@ -21,10 +21,7 @@
     </head>
     <body>
         <div id="app">
-            <div id="topbar" style="display:none">
-                <span id="date"></span>
-                <a href="#menu" onclick="save()">save</a>
-            </div>
+            <!-- Menu -->
             <div id="menu">
                 <h1>My Journal</h1>
                 <a href="#journal-today">today</a>
@@ -32,15 +29,24 @@
                 <a id ="older-button" href="#older" style="display:none">older</a>
                 <a href="#settings">settings</a>
             </div>
-            <textarea id="today" rows="" cols="" style="display:none">
 
-            </textarea>
-            <textarea id="yesterday" style="display:none">
+            <!-- Journal Entry -->
+            <div id="entryPage" style="display:none">
+                <div id="topbar">
+                    <span id="date"></span>
+                    <a href="#menu" onclick="saveEntry()">save</a>
+                </div>
+                <textarea id="entry" rows="" cols="">
 
-            </textarea>
+                </textarea>
+            </div>  
+
+            <!-- Past Entries -->
             <div id="older" style="display:none">
 
             </div>
+
+            <!-- Settings -->
             <div id="settings" style="display:none">
                 <div id="settingsBar">
                     <span id=""></span>
