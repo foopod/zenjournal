@@ -1,5 +1,4 @@
-# My Narrative
-
+# zenjournal
 A quick and easy to use Journal App that focusses on privacy and simplicity.
 
 ## Features
