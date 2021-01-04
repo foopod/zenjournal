@@ -9,6 +9,8 @@ A quick and easy to use Journal App that focusses on privacy and simplicity.
 + Support for light/dark themes
 + No tracking or analytics - if you care to, please provide feedback via github issue.
 
+> [Try it now](https://zenjournal.org)
+
 ## Why?
 
 My 2021 new years resolution was to start journalling. I started with a simple template and as a way to record the kinds of things I was doing with my time.
