@@ -63,16 +63,26 @@ textarea.mini {
     text-align: center;
     text-decoration: none;
 }
-#date, #older span{
+#date, #search span{
     font-weight: bold;
     font-size: smaller;
     text-align: left;
 }
-#older{
-    padding-top : 1em;
+#searchbar{
+    display: flex;
+}
+#searchbar input{
+    width: 70%;
+    align-items: center;
+    height: min-content;
+    margin: 0.5em 0;
+    padding:0.5em;
+    font-size: 110%;
+}
+#searchresults{
     white-space: pre-line;
 }
-#older span{
+#search span{
     font-size: 120%;
     text-decoration: underline;
 }

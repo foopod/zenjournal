@@ -26,7 +26,7 @@
                 <h1>zenjournal</h1>
                 <a href="#journal-today">today</a>
                 <a href="#journal-yesterday">yesterday</a>
-                <a id ="older-button" href="#older" style="display:none">older</a>
+                <a id ="search-button" href="#search" style="display:none">search</a>
                 <a href="#settings">settings</a>
             </div>
 
@@ -42,8 +42,14 @@
             </div>  
 
             <!-- Past Entries -->
-            <div id="older" style="display:none">
-
+            <div id="search" style="display:none">
+                <div id="searchbar">
+                    <input id="searchField" type="text" placeholder="search"/>
+                    <button class="button" onclick="search()">search</button>
+                </div>
+                <div id="searchresults">
+                    
+                </div>
             </div>
 
             <!-- Settings -->
@@ -63,7 +69,7 @@
                 <button class="button" onclick="setTheme('light')">light</button>
                 <button class="button" onclick="setTheme('dark')">dark</button>
                 <p><b>Daily Template</b></p>
-                <textarea id="templateField" class="mini" placeholder="Create new template here"></textarea>
+                <textarea id="templateField" class="mini" placehsearch="Create new template here"></textarea>
             </div>
         </div>
         <script type="application/javascript" src="script/app.js"></script>

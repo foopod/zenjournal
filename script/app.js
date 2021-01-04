@@ -11,9 +11,9 @@ function init(){
     if(!localStorage.getItem("template"))
         localStorage.setItem("template", "What happened yesterday?\n- \n\nToday I want to \n\nI am grateful for ");
     
-    // enable older if more than 2 entries
+    // enable search if more than 2 entries
     if(JSON.parse(localStorage.getItem("journal")).length > 2){
-        document.getElementById("older-button").style.display = "block";
+        document.getElementById("search-button").style.display = "block";
     }
 
     // hopefully not a direct link to anything other than the menu, but load the page they ask for anyway
@@ -67,19 +67,38 @@ function saveEntry(){
     localStorage.setItem("journal", JSON.stringify(journal));
 }
 
-// show older entries (uneditable)
-function showOlder(){
-    document.getElementById("older").innerHTML = "";
+// show search entries (uneditable)
+function showSearch(){
+    document.getElementById("searchresults").innerHTML = "";
+
+}
+
+function search(){
+    document.getElementById("searchresults").innerHTML = "";
+    var criteria = document.getElementById("searchField").value;
 
     var journal = JSON.parse(localStorage.getItem("journal"));
+    journal = journal.filter(function(e) { return e.text.toUpperCase().includes(criteria.toUpperCase())});
     journal.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     });
     journal.forEach(entry => {
         if(true || entry.date != today.toDateString() && entry.date != yesterday.toDateString()){
-            document.getElementById("older").innerHTML+="<span>" + entry.date+"</span><p>"+entry.text+"</p>";
+            document.getElementById("searchresults").innerHTML+="<span>" + entry.date+"</span><p>"+htmlHighlight(entry.text, criteria)+"</p>";
         }
     });
+}
+
+function htmlHighlight(inputString, hightlightedString){
+    var split = inputString.split(new RegExp(hightlightedString, 'i'));
+    var output = "";
+    split.forEach((element, index) => {
+        output+=element;
+        if(index != split.length-1){
+            output+= "<mark>"+ hightlightedString + "</mark>"
+        }
+    });
+    return output;
 }
 
 // populate settings page
@@ -127,31 +146,31 @@ function loadScreen(hash){
         document.getElementById("menu").style.display = 'flex';
         document.getElementById("entryPage").style.display = 'none';
         document.getElementById("settings").style.display = 'none';
-        document.getElementById("older").style.display = 'none';
+        document.getElementById("search").style.display = 'none';
     } else if(hash == "#settings"){
         showSettings();
         document.getElementById("menu").style.display = 'none';
         document.getElementById("entryPage").style.display = 'none';
         document.getElementById("settings").style.display = 'block';
-        document.getElementById("older").style.display = 'none';
+        document.getElementById("search").style.display = 'none';
     } else if(hash == "#journal-today"){
         showEntry("today");
         document.getElementById("menu").style.display = 'none';
         document.getElementById("entryPage").style.display = 'block';
         document.getElementById("settings").style.display = 'none';
-        document.getElementById("older").style.display = 'none';
+        document.getElementById("search").style.display = 'none';
     } else if(hash == "#journal-yesterday"){
         showEntry("yesterday");
         document.getElementById("menu").style.display = 'none';
         document.getElementById("entryPage").style.display = 'block';
         document.getElementById("settings").style.display = 'none';
-        document.getElementById("older").style.display = 'none';
-    } else if(hash == "#older"){
-        showOlder();
+        document.getElementById("search").style.display = 'none';
+    } else if(hash == "#search"){
+        showSearch();
         document.getElementById("menu").style.display = 'none';
         document.getElementById("entryPage").style.display = 'none';
         document.getElementById("settings").style.display = 'none';
-        document.getElementById("older").style.display = 'block';
+        document.getElementById("search").style.display = 'block';
     }
 }
 
