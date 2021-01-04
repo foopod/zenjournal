@@ -18,5 +18,4 @@ My 2021 new years resolution was to start journalling. I started with a simple t
 As I continue to journal this app will probably change slightly, some of the features I want to get around to adding are..
 
 + **Search** - search through all previous journal entries
-+ **Encryption** - encrypt entries stored locally
 + **Cloud Backup** - background sync to cloud (encrypted locally)
