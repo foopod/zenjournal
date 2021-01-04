@@ -16,8 +16,8 @@ body{
     
 }
 #topbar a, #settingsBar a, .button{
-    background-color: black;
-    color: white;
+    background-color: #ddd;
+    color: black;
     padding:0.3em;
     width: 30%;
     text-align: center;
@@ -58,8 +58,8 @@ textarea.mini {
     margin: 0.5em;
     width: 60%;
     font-size: 180%;
-    background-color: black;
-    color: white;
+    background-color: #ddd;
+    color: black;
     text-align: center;
     text-decoration: none;
 }
@@ -84,6 +84,6 @@ textarea.mini {
 }
 
 .dark #menu a, .dark #settingsBar a, .dark #topbar a, .dark .button{
-    background-color: white;
-    color: black;
+    background-color: #222;
+    color: white;
 }
