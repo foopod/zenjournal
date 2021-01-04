@@ -1,6 +1,6 @@
 {
-    "name": "My Journal",
-    "short_name": "My Journal",
+    "name": "zenjournal",
+    "short_name": "zenjournal",
     "start_url": "/",
     "display": "standalone",
     "theme_color": "#ffffff",
