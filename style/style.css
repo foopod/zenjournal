@@ -84,6 +84,6 @@ textarea.mini {
 }
 
 .dark #menu a, .dark #settingsBar a, .dark #topbar a, .dark .button{
-    background-color: #222;
+    background-color: #333;
     color: white;
 }
