@@ -9,7 +9,7 @@ A quick and easy to use Journal App that focusses on privacy and simplicity.
 + Support for light/dark themes
 + No tracking or analytics - if you care to, please provide feedback via github issue.
 
-> [Try it now](https://zenjournal.org)
+> [Try it now](https://app.zenjournal.org)
 
 ## Why?
 
