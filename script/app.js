@@ -70,11 +70,12 @@ function saveEntry(){
 // show search entries (uneditable)
 function showSearch(){
     document.getElementById("searchresults").innerHTML = "";
-
+    document.getElementById("search").className ="middle";
 }
 
 function search(){
     document.getElementById("searchresults").innerHTML = "";
+    document.getElementById("search").className ="";
     var criteria = document.getElementById("searchField").value;
 
     var journal = JSON.parse(localStorage.getItem("journal"));
@@ -87,6 +88,9 @@ function search(){
             document.getElementById("searchresults").innerHTML+="<span>" + entry.date+"</span><p>"+htmlHighlight(entry.text, criteria)+"</p>";
         }
     });
+    if(document.getElementById("searchresults").innerHTML == ""){
+        document.getElementById("searchresults").innerHTML = "<p style='text-align:center;'> No results matching "+criteria+"</p>"
+    }
 }
 
 function htmlHighlight(inputString, hightlightedString){

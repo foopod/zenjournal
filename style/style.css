@@ -74,6 +74,10 @@ textarea.mini {
     top: 0;
     background: white;
 }
+.middle{
+    position: sticky;
+    top:40%;
+}
 #searchbar input{
     width: 70%;
     align-items: center;
