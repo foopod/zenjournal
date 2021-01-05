@@ -2,7 +2,6 @@ html, body, #app, #entryPage{
     height: 100%;
 }
 body{
-    padding:0 1em;
     font-family: mono;
     max-width: 26em;
     margin: auto;
@@ -22,7 +21,11 @@ body{
     width: 30%;
     text-align: center;
     margin:0.5em;
+    margin-right: 0;
     text-decoration: none;
+}
+#entryPage, #settings{
+    padding:0 1em;
 }
 
 #topbar{
@@ -45,7 +48,7 @@ textarea{
     overflow: scroll;
     font-size: 120%;
     border: none;
-    padding:0.2em;
+    padding:0;
 }
 
 textarea.mini {
@@ -73,6 +76,7 @@ textarea.mini {
     position: sticky;
     top: 0;
     background: white;
+    padding:0 0.5em;
 }
 .middle{
     position: sticky;
@@ -82,12 +86,14 @@ textarea.mini {
     width: 70%;
     align-items: center;
     height: min-content;
-    margin: 0.5em 0;
+    margin: 0.5em 0.5em;
+    margin-left: 0;
     padding:0.5em;
     font-size: 110%;
 }
 #searchresults{
     white-space: pre-line;
+    padding:0 1em;
 }
 #search span{
     font-size: 120%;

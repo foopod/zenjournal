@@ -210,4 +210,10 @@ document.getElementById("default-file").addEventListener("change", function () {
     }
 });
 
+//enter in search executes search
+document.body.onkeydown = function(e) {
+    if (e.keyCode == 13 && window.location.hash == "#search")
+        search();
+};
+
 init();
