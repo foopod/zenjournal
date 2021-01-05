@@ -77,19 +77,29 @@ function search(){
     document.getElementById("searchresults").innerHTML = "";
     document.getElementById("search").className ="";
     var criteria = document.getElementById("searchField").value;
+    var found = false;
 
-    var journal = JSON.parse(localStorage.getItem("journal"));
-    journal = journal.filter(function(e) { return e.text.toUpperCase().includes(criteria.toUpperCase())});
-    journal.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-    });
-    journal.forEach(entry => {
-        if(true || entry.date != today.toDateString() && entry.date != yesterday.toDateString()){
-            document.getElementById("searchresults").innerHTML+="<span>" + entry.date+"</span><p>"+htmlHighlight(entry.text, criteria)+"</p>";
+    if(criteria){
+        var journal = JSON.parse(localStorage.getItem("journal"));
+        journal = journal.filter(function(e) { return e.text.toUpperCase().includes(criteria.toUpperCase())});
+        journal.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+        });
+        journal.forEach(entry => {
+            if(!found)
+                found = true;
+            if(true || entry.date != today.toDateString() && entry.date != yesterday.toDateString()){
+                document.getElementById("searchresults").innerHTML+="<span>" + entry.date+"</span><p>"+htmlHighlight(entry.text, criteria)+"</p>";
+            }
+        });
+    }
+    if(!found){
+        if(criteria){
+            document.getElementById("searchresults").innerHTML = "<p style='text-align:center;'> No results matching "+criteria+"</p>"
+        } else {
+            document.getElementById("searchresults").innerHTML = "<p style='text-align:center;'> No matching results</p>"
         }
-    });
-    if(document.getElementById("searchresults").innerHTML == ""){
-        document.getElementById("searchresults").innerHTML = "<p style='text-align:center;'> No results matching "+criteria+"</p>"
+        
     }
 }
 
