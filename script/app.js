@@ -70,6 +70,7 @@ function saveEntry(){
 // show search entries (uneditable)
 function showSearch(){
     document.getElementById("searchresults").innerHTML = "";
+    document.getElementById("searchField").value = "";
     document.getElementById("search").className ="middle";
 }
 
@@ -104,15 +105,7 @@ function search(){
 }
 
 function htmlHighlight(inputString, hightlightedString){
-    var split = inputString.split(new RegExp(hightlightedString, 'i'));
-    var output = "";
-    split.forEach((element, index) => {
-        output+=element;
-        if(index != split.length-1){
-            output+= "<mark>"+ hightlightedString + "</mark>"
-        }
-    });
-    return output;
+    return inputString.replace(new RegExp('('+hightlightedString+')', 'i'), "<mark>$1</mark>");
 }
 
 // populate settings page
