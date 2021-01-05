@@ -75,7 +75,7 @@ textarea.mini {
     position: sticky;
     top: 0;
     background: white;
-    padding:0 0.5em;
+    padding: 0.5em;
 }
 .middle{
     position: sticky;
@@ -86,7 +86,7 @@ textarea.mini {
     align-items: center;
     height: min-content;
     margin: 0.5em;
-    padding:0.5em;
+    padding: 0.5em;
     font-size: 110%;
 }
 #searchresults{
