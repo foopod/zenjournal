@@ -36,9 +36,11 @@
                     <span id="date"></span>
                     <a href="#menu" onclick="saveEntry()">save</a>
                 </div>
-                <textarea id="entry" rows="" cols="">
+                <div class="container">
+                    <textarea id="entry" rows="" cols="">
 
-                </textarea>
+                    </textarea>
+                </div>
             </div>  
 
             <!-- Past Entries -->
@@ -58,16 +60,28 @@
                     <span id=""></span>
                     <a href="#menu" onclick="saveSettings()">save</a>
                 </div>
-                <p><b>Export</b></p>
-                <button class="button" onclick="saveJSON()">save file</button>
-                <p><b>Import</b></p>
-                <input type="file" id="default-file" hidden="hidden"/>
-                <button id="uploadButton" type="button" class="button">
-                    choose file
-                </button>
+                <div class="columns">
+                    <div class="half">
+                        <p><b>Export</b></p>
+                        <button class="button" onclick="saveJSON()">save file</button>
+                    </div>
+                    <div class="half">
+                        <p><b>Import</b></p>
+                        <input type="file" id="default-file" hidden="hidden"/>
+                        <button id="uploadButton" type="button" class="button">
+                            choose file
+                        </button>
+                    </div>
+                </div>
                 <p><b>Theme</b></p>
-                <button class="button" onclick="setTheme('light')">light</button>
-                <button class="button" onclick="setTheme('dark')">dark</button>
+                <div class="columns">
+                    <div class="half">
+                        <button class="button" onclick="setTheme('light')">light</button>
+                    </div>
+                    <div class="half">
+                        <button class="button" onclick="setTheme('dark')">dark</button>
+                    </div>
+                </div>
                 <p><b>Daily Template</b></p>
                 <textarea id="templateField" class="mini" placehsearch="Create new template here"></textarea>
             </div>

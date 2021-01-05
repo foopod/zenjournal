@@ -1,4 +1,4 @@
-html, body, #app, #entryPage{
+html, body, #app, #entryPage, .container{
     height: 100%;
 }
 body{
@@ -20,10 +20,10 @@ body{
     padding:0.3em;
     width: 30%;
     text-align: center;
-    margin:0.5em;
+    margin:0.5em 0;
     text-decoration: none;
 }
-#entryPage, #settings{
+#entryPage, #settings, .container{
     padding:0 1em;
 }
 
@@ -75,7 +75,7 @@ textarea.mini {
     position: sticky;
     top: 0;
     background: white;
-    padding: 0.5em;
+    padding: 0.5em 1em;
 }
 .middle{
     position: sticky;
@@ -85,7 +85,7 @@ textarea.mini {
     width: 70%;
     align-items: center;
     height: min-content;
-    margin: 0.5em;
+    margin: 0.5em 0.5em 0.5em 0;
     padding: 0.5em;
     font-size: 110%;
 }
@@ -96,6 +96,18 @@ textarea.mini {
 #search span{
     font-size: 120%;
     text-decoration: underline;
+}
+.columns{
+    display: flex;
+}
+
+.half{
+    width: 50%;
+}
+.half .button{
+    width: 80%;
+    margin: auto;
+    display: block;
 }
 
 /* Dark Mode */
