@@ -71,6 +71,7 @@ function saveEntry(){
 function showSearch(){
     document.getElementById("searchresults").innerHTML = "";
     document.getElementById("searchField").value = "";
+    document.getElementById("searchField").focus();
     document.getElementById("search").className ="middle";
 }
 
@@ -174,11 +175,11 @@ function loadScreen(hash){
         document.getElementById("settings").style.display = 'none';
         document.getElementById("search").style.display = 'none';
     } else if(hash == "#search"){
-        showSearch();
         document.getElementById("menu").style.display = 'none';
         document.getElementById("entryPage").style.display = 'none';
         document.getElementById("settings").style.display = 'none';
         document.getElementById("search").style.display = 'block';
+        showSearch();
     }
 }
 

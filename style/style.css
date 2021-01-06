@@ -88,8 +88,11 @@ textarea.mini {
     align-items: center;
     height: min-content;
     margin: 0.5em 0.5em 0.5em 0;
-    padding: 0.5em;
+    padding: 0.5em 0.5em 0.5em 1em;
     font-size: 110%;
+    background-color: #ddd;
+    border: none;
+    border-radius: 2em;
 }
 #searchresults{
     white-space: pre-line;
@@ -118,7 +121,11 @@ textarea.mini {
     color: white;
 }
 
-.dark #menu a, .dark #settingsBar a, .dark #topbar a, .dark .button{
+.dark #menu a, .dark #settingsBar a, .dark #topbar a, .dark .button, .dark #searchbar input{
     background-color: #333;
     color: white;
+}
+
+.dark #searchbar input{
+    border:none;
 }
