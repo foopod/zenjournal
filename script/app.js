@@ -9,7 +9,7 @@ function init(){
 
     // set up template if doesn't exist
     if(!localStorage.getItem("template"))
-        localStorage.setItem("template", "What happened yesterday?\n- \n\nToday I want to \n\nI am grateful for ");
+        localStorage.setItem("template", "What happened yesterday?\n+ \n\nToday I want to \n\nI am grateful for ");
     
     // enable search if more than 2 entries
     if(JSON.parse(localStorage.getItem("journal")).length > 2){
