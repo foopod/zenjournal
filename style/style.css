@@ -1,6 +1,10 @@
 html, body, #app, #entryPage, .container{
     height: 100%;
 }
+h1{
+    font-size: 2.5em;
+    margin: 2em;
+}
 body{
     font-family: mono;
     max-width: 26em;
@@ -17,14 +21,15 @@ body{
 #topbar a, #settingsBar a, .button{
     background-color: #ddd;
     color: black;
-    padding:0.3em;
-    width: 30%;
     text-align: center;
     margin:0.5em 0;
     text-decoration: none;
     border-radius: 2em;
 }
-#entryPage, #settings, .container{
+#entryPage, #settings{
+    padding:0 2em;
+}
+.container{
     padding:0 1em;
 }
 
@@ -33,9 +38,8 @@ body{
 }
 .button{
     border:none;
-    padding:0.5em;
+    padding:0.5em 1em;
     font-size: 110%;
-    width: 40%;
 }
 #menu{
     display: flex;
@@ -78,15 +82,15 @@ textarea.mini {
     top: 0;
     background: white;
     padding: 0.5em 1em;
+    justify-content: space-between;
 }
 .middle{
     position: sticky;
     top:40%;
 }
 #searchbar input{
-    width: 70%;
+    width: 60%;
     align-items: center;
-    height: min-content;
     margin: 0.5em 0.5em 0.5em 0;
     padding: 0.5em 0.5em 0.5em 1em;
     font-size: 110%;
