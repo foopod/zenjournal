@@ -22,6 +22,7 @@ body{
     text-align: center;
     margin:0.5em 0;
     text-decoration: none;
+    border-radius: 2em;
 }
 #entryPage, #settings, .container{
     padding:0 1em;
@@ -64,6 +65,7 @@ textarea.mini {
     color: black;
     text-align: center;
     text-decoration: none;
+    border-radius: 1em;
 }
 #date, #search span{
     font-weight: bold;
