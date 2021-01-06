@@ -105,7 +105,8 @@ function search(){
 }
 
 function htmlHighlight(inputString, hightlightedString){
-    return inputString.replace(new RegExp('('+hightlightedString+')', 'i'), "<mark>$1</mark>");
+    const regex = new RegExp('('+hightlightedString+')', 'ig');
+    return inputString.replaceAll( regex, "<mark>$1</mark>");
 }
 
 // populate settings page
